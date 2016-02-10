@@ -20,29 +20,26 @@
 ?>
 
 <h1><?php echo htmlspecialchars($product_name); ?></h1>
-<div id="left_column">
-    <p><img src="<?php echo $image_path; ?>"
-            alt="<?php echo $image_alt; ?>" /></p>
-</div>
-
-<div id="right_column">
-    <p><b>List Price:</b>
-        <?php echo '$' . $list_price; ?></p>
-    <p><b>Discount:</b>
-        <?php echo $discount_percent_f . '%'; ?></p>
-    <p><b>Your Price:</b>
-        <?php echo '$' . $unit_price_f; ?>
-        (You save
-        <?php echo '$' . $discount_amount_f; ?>)</p>
-    <form action="<?php echo $app_path . 'cart' ?>" method="get" 
-          id="add_to_cart_form">
-        <input type="hidden" name="action" value="add" />
-        <input type="hidden" name="product_id"
-               value="<?php echo $product_id; ?>" />
-        <b>Quantity:</b>&nbsp;
-        <input type="text" name="quantity" value="1" size="2" />
-        <input type="submit" value="Add to Cart" />
-    </form>
+<div class="row">
+	<div class="col-sm-8">
+		<img class="image" src="<?php echo $image_path; ?>"
+				alt="<?php echo $image_alt; ?>" />
+	</div><!-- left image -->
+	<div class="col-sm-4">
+		<p><b>Price:</b>
+        <?php echo '$' . $price; ?></p>
+		<form action="<?php echo $app_path . 'cart' ?>" method="get" 
+			  id="add_to_cart_form">
+			<input type="hidden" name="action" value="add" />
+			<input type="hidden" name="product_id"
+				   value="<?php echo $product_id; ?>" />
+			<b>Size:</b>&nbsp;
+			<input type="text" name="size" value="M" size="3" />
+			<b>Quantity:</b>&nbsp;
+			<input type="text" name="quantity" value="1" size="2" />
+			<input type="submit" value="Add to Cart" />
+		</form>
+	</div><!-- right details -->	
     <h2>Description</h2>
     <?php echo $description_with_tags; ?>
 </div>

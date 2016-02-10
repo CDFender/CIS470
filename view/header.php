@@ -16,19 +16,19 @@
 			<h3 class="text-muted"><a href="#"><strong>Williams Specialty Company</strong></a></h3>
 			<nav>
 				<ul class="nav nav-justified">
-					<li><a href="">Clothing</a></li>
-					<li><a href="">Plaques</a></li>
-					<li><a href="">Trophies</a></li>
+					<li><a href="<?php echo $app_path . 'catalog?type=clothing'; ?>">Clothing</a></li>
+					<li><a href="<?php echo $app_path . 'catalog?type=plaques'; ?>">Clothing</a></li>
+					<li><a href="<?php echo $app_path . 'catalog?type=trophies'; ?>">Plaques</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false">Help<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="">Contact Us</a></li>
-							<li><a href="">Order Status</a></li>
-							<li><a href="">Returns</a></li>
+							<li><a href="<?php echo $app_path . 'help?action=contact';?>">Contact Us</a></li>
+							<li><a href="<?php echo $app_path . 'account?action=view_order';?>">Order Status</a></li>
+							<li><a href="<?php echo $app_path . 'account?action=view_order';?>">Returns</a></li>
 						</ul>
 					</li>
-					<li><a href="">Login</a></li>
-					<li><a href=""><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+					<li><a href="<?php echo $app_path . 'account';?>">Login</a></li>
+					<li><a href="<?php echo $app_path . 'cart';?>"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
 				</ul>
 			</nav>
 		</div><!-- masthead -->	

@@ -7,9 +7,9 @@
 		<div class="col-sm-6">
 			<nav class="navbar navbar-default" role="navigation">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">About Us</a></li>
-					<li><a href="#">Return Policy</a></li>
-					<li><a href="#">Sitemap</a></li>
+					<li><a href="<?php $app_path . 'help?action=aboutus';?>">About Us</a></li>
+					<li><a href="<?php $app_path . 'help?action=returnpolicy';?>">Return Policy</a></li>
+					<li><a href="<?php $app_path . 'help?action=sitemap';?>">Sitemap</a></li>
 				</ul>
 			</nav>        
 		</div><!-- col-sm-6 -->

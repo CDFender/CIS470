@@ -1,6 +1,6 @@
 <?php include 'view/header.php'; ?>
 
-<main class="main">		
+<main>		
 	<div class="page" id="featured">
 		<div class="jumbotron">
 		<h1>Welcome to our new site!</h1>
@@ -22,7 +22,7 @@
 			?>		
 		
 			<article class="product col-sm-3">
-				<img class="thumbnail" src="images/<?php echo htmlspecialchars($product['product_id']);?>.png" alt="Thumbnail">
+				<img class="img-thumbnail" src="images/<?php echo htmlspecialchars($product['product_id']);?>.png" alt="Thumbnail">
 				<h3><a href="catalog?product_id=<?php echo $product['product_id'];?>"><?php echo htmlspecialchars($product['product_id']);?></a></h3>
 				<p><b>Price:</b>$<?php echo number_format($price, 2);?></p>
 				<p><?php echo $first_paragraph;?></p>
