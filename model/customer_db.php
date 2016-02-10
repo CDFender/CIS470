@@ -90,13 +90,13 @@ function add_customer($email, $first_name, $last_name,
 }
 
 function update_customer($customer_id, $email, $first_name, $last_name,
-                      $password_1, $password_2) {
+                      $password_1, $password_2, $address, $city, $state, $zip) {
     global $db;
     $query = '
         UPDATE customers
         SET emailAddress = :email,
             firstName = :first_name,
-            lastName = :last_name
+            lastName = :last_name,
         WHERE customerID = :customer_id';
     $statement = $db->prepare($query);
     $statement->bindValue(':email', $email);

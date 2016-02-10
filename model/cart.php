@@ -46,10 +46,7 @@ function cart_get_items() {
         // Store data in items array
         $items[$product_id]['name'] = $product['productName'];
         $items[$product_id]['description'] = $product['description'];
-        $items[$product_id]['list_price'] = $list_price;
-        $items[$product_id]['discount_percent'] = $discount_percent;
-        $items[$product_id]['discount_amount'] = $discount_amount;
-        $items[$product_id]['unit_price'] = $unit_price;
+        $items[$product_id]['price'] = $price;
         $items[$product_id]['quantity'] = $quantity;
         $items[$product_id]['line_price'] = $line_price;
     }
@@ -76,7 +73,7 @@ function cart_subtotal () {
     $subtotal = 0;
     $cart = cart_get_items();
     foreach ($cart as $item) {
-        $subtotal += $item['unit_price'] * $item['quantity'];
+        $subtotal += $item['price'] * $item['quantity'];
     }
     return $subtotal;
 }
@@ -84,18 +81,6 @@ function cart_subtotal () {
 // Remove all items from the cart
 function clear_cart() {
     $_SESSION['cart'] = array();
-}
-
-// Set the category for the last item added to the cart
-function set_last_category($category_id, $category_name) {
-    $_SESSION['last_category_id'] = $category_id;
-    $_SESSION['last_category_name'] = $category_name;
-}
-
-// Set the product for the last item added to the cart
-function set_last_product($product_id, $product_name) {
-    $_SESSION['last_product_id'] = $product_id;
-    $_SESSION['last_product_name'] = $product_name;
 }
 
 // Get the correct word for the number of items
