@@ -1,13 +1,12 @@
 <?php
 require_once('../util/main.php');
-require_once('util/secure_conn.php');
-require_once('util/validation.php');
+require_once('../util/validation.php');
 
-require_once('model/cart.php');
-require_once('model/product_db.php');
-require_once('model/order_db.php');
-require_once('model/customer_db.php');
-require_once('model/address_db.php');
+require_once('../model/cart.php');
+require_once('../model/product_db.php');
+require_once('../model/order_db.php');
+require_once('../model/customer_db.php');
+require_once('../model/address_db.php');
 
 if (!isset($_SESSION['user'])) {
     $_SESSION['checkout'] = true;
@@ -37,7 +36,7 @@ switch ($action) {
         $state = $shipping_address['state'];
         $tax = tax_amount($subtotal);    // function from order_db.php file
         $total = $subtotal + $tax + $shipping_cost;
-        include 'checkout_confirm.php';
+        include './checkout_confirm.php';
         break;
     case 'payment':
         if (cart_product_count() == 0) {
@@ -52,7 +51,7 @@ switch ($action) {
         $cc_expiration_message = '';
         
         $billing_address = get_address($_SESSION['user']['billingAddressID']);
-        include 'checkout_payment.php';
+        include './checkout_payment.php';
         break;
     case 'process':
         if (cart_product_count() == 0) {
@@ -99,7 +98,7 @@ switch ($action) {
         // redisplay Checkout page and exit controller
         if (!empty($cc_number_message) || !empty($cc_ccv_message) ||
                 !empty($cc_expiration_message)) {
-            include 'checkout/checkout_payment.php';
+            include './checkout_payment.php';
             break;
         }
 

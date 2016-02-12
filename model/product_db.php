@@ -1,7 +1,8 @@
 <?php
 function get_products_by_type($media_type) {
 	global $db;
-	$query = 'CALL GetAllProducts(@:media_type)';
+	//$query = 'CALL GetProducts(@:media_type)';
+	$query = ' SELECT * FROM Product WHERE Media_Type = :media_type';
 	try {
 		$statement = $db->prepare($query);
 		$statement->bindValue(':media_type', $media_type);
@@ -17,10 +18,11 @@ function get_products_by_type($media_type) {
 
 function get_product($product_id) {
 	global $db;
-	$query = 'CALL GetProduct(@:productid)';
+	$query = 'SELECT * FROM Product WHERE product_id = :product_id';
+	//$query = 'CALL GetProduct(@:product_id)';
     try {
         $statement = $db->prepare($query);
-        $statement->bindValue(':productid', $product_id);
+        $statement->bindValue(':product_id', $product_id);
         $statement->execute();
         $result = $statement->fetch();
         $statement->closeCursor();

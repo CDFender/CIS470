@@ -18,7 +18,7 @@
             <tr>
                 <td><?php echo htmlspecialchars($item['name']); ?></td>
                 <td>
-                    <?php echo sprintf('$%.2f', $item['unit_price']); ?>
+                    <?php echo sprintf('$%.2f', $item['price']); ?>
                 </td>
                 <td>
                     <input type="text" size="3"
@@ -28,32 +28,35 @@
                 <td>
                     <?php echo sprintf('$%.2f', $item['line_price']); ?>
                 </td>
-				<td><a href=".?action=delete&product_id=<?php echo $item['product_id'];?>" 
-						class="btn btn-xs btn-warning" value="delete">Delete</a></td>
+				<td><a href=".?action=remove&product_id=<?php echo $item['product_id'];?>" 
+						class="btn btn-xs btn-danger" value="remove">Remove</a></td>
             </tr>
             <?php endforeach; ?>
-			<tr>
-				<td colspan="3"><b>Subtotal</b></td>
-				<?php echo sprintf('$%.2f', cart_subtotal()); ?> 
-			</tr>
-            <tr>
-                <td colspan="2"><a href=".?action=update" class="btn btn-xs btn-primary" value="update">
-						Update</a></td>
-				<td colspan="2"><a href=".?action=empty_cart" class="btn btn-xs btn-primary" value="empty_cart">
-						Empty Cart</a></td>
-            </tr>
-            </table>			
+			</table>
+			<table class="table">
+				<tr>
+					<td colspan="4"><b>Subtotal</b></td>
+					<td><?php echo sprintf('$%.2f', cart_subtotal()); ?> </td>
+				</tr>
+			</table>
         </form>
+		
+		<div class="row">
+			<div class="col-sm-1">
+				<a href="../checkout" class="btn btn-large btn-success">Checkout</a>
+			</div><!-- checkout column -->
+			<div class="col-sm-8">
+			</div>
+			<div class="col-sm-1">
+				<a href=".?action=update" class="btn btn-large btn-primary" value="update">Update</a>
+			</div><!-- update cart column -->
+			<div class="col-sm-1">
+				<a href=".?action=empty_cart" class="btn btn-large btn-warning" value="empty_cart">Empty Cart</a>     			
+			</div><!-- empty cart column -->
+			
+			
+		</div><!-- row end -->
         
-    <?php endif; ?>
-
-    <p>Return to: <a href="../">Home</a></p>
-
-    <!-- if cart has items, display the Checkout link -->
-    <?php if (cart_product_count() > 0) : ?>
-        <p>
-            Proceed to: <a href="../checkout">Checkout</a>
-        </p>
     <?php endif; ?>
 </main>
 

@@ -21,12 +21,12 @@ switch ($action) {
 		include('./type_view.php');
 		break;	
 	case 'plaques':
-		$type_name = 'Clothing';
+		$type_name = 'Plaques';
 		$products = get_products_by_type($type_name);
 		include('./type_view.php');
 		break;	
 	case 'trophies':
-		$type_name = 'Clothing';
+		$type_name = 'Trophies';
 		$products = get_products_by_type($type_name);
 		include('./type_view.php');
 		break;	

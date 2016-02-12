@@ -7,8 +7,8 @@
 	<?php else: ?>
 		<div class="row">
 			<?php foreach ($products as $product) :
-			$price = $product['price'];
-			$description = $product['description'];
+			$price = $product['Price'];
+			$description = $product['Description'];
 			
 			// Get first paragraph of description
 			$description_with_tags = add_tags($description);
@@ -17,11 +17,11 @@
 			?>		
 		
 			<article class="product col-sm-3">
-				<img class="thumbnail" src="images/<?php echo htmlspecialchars($product['product_id']);?>.png" 
+				<img class="product_image_column" src="../images/<?php echo htmlspecialchars($product['Product_ID']);?>.jpg" 
 						alt="Thumbnail">
-				<h3><a href="catalog?product_id=<?php echo $product['product_id'];?>">
-						<?php echo htmlspecialchars($product['product_id']);?></a></h3>
-				<p><b>Price:</b>$<?php echo number_format($price, 2);?></p>
+				<h3><a href="./?product_id=<?php echo $product['Product_ID'];?>">
+						<?php echo htmlspecialchars($product['Name']);?></a></h3>
+				<p><b>Price: </b>$<?php echo number_format($price, 2);?></p>
 				<p><?php echo $first_paragraph;?></p>
 			</article>
 			<?php endforeach; ?>			

@@ -1,7 +1,7 @@
 <?php include '../view/header.php'; ?>
 
 <main>
-	<div class="page">
+	<div class="container">
 		<form class="form-signin" method="post" id="login_form">
 			<h2 class="form-signin-heading">Please sign in</h2>
 			<label for="inputEmail" class="sr-only">Email address</label>
@@ -14,12 +14,12 @@
 					<input type="checkbox" value="remember-me"> Remember me
 				</label>
 			</div><!-- checkbox -->
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Register for a new account</button>
+			<a href="./?action=login" class="btn btn-lg btn-primary btn-block">Sign in</a>
+			<a href="./?action=view_register" class="btn btn-lg btn-info btn-block">Register for a new account</a>
 			<div class="">
 				<label><a href="">Forgot password?</a></label>
 			</div><!-- forgot password -->
 		</form>
-	</div><!-- page -->
+	</div><!-- container -->
 </main>
 <?php include '../view/footer.php'; ?>

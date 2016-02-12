@@ -1,9 +1,9 @@
 <?php
 require_once '../util/main.php';
-require_once 'util/validation.php';
+require_once '../util/validation.php';
 
-require_once 'model/cart.php';
-require_once 'model/product_db.php';
+require_once '../model/cart.php';
+require_once '../model/product_db.php';
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
@@ -40,15 +40,14 @@ switch ($action) {
 		
         $cart = cart_get_items();
         break;
-	case 'delete':
+	case 'remove':
 		$product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
 		cart_remove_item($product_id);
 		
 		$cart = cart_get_items();
 		break;	
 	case 'empty_cart':
-		unset($_SESSION['cart']);
-		include('cart_view.php');
+		clear_cart();
 		break;
     default:
         add_error("Unknown cart action: " . $action);

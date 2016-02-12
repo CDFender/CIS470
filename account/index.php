@@ -1,15 +1,14 @@
 <?php
 require_once('../util/main.php');
 
-require_once('model/customer_db.php');
-require_once('model/order_db.php');
-require_once('model/product_db.php');
+require_once('../model/customer_db.php');
+require_once('../model/product_db.php');
 
-require_once('model/fields.php');
-require_once('model/validate.php');
+require_once('../model/fields.php');
+require_once('../model/validate.php');
 
 $action = filter_input(INPUT_POST, 'action');
-if ($action !== NULL) {
+if ($action == NULL) {
 	$action = filter_input(INPUT_GET, 'action');
 	if ($action == NULL) {
 		$action = 'view_login';
@@ -48,7 +47,7 @@ switch ($action) {
 		$state = '';
 		$zip = '';
 		
-		include 'account_register.php';
+		include './account_register.php';
 		break;
 	case 'register':
 		// Store user data in local variables
@@ -75,14 +74,14 @@ switch ($action) {
 
 		// If validation errors, redisplay Register page and exit controller
 		if ($fields->hasErrors()) {
-			include 'account/account_register.php';
+			include './account_register.php';
 			break;
 		}
 		
 		// If passwords don't match, redisplay Register page and exit controller
 		if ($password_1 !== $password_2) {
 			$password_message = 'Passwords do not match.';
-			include 'account/account_register.php';
+			include './account_register.php';
 			break;
 		}
 		
@@ -113,7 +112,7 @@ switch ($action) {
 		$password = '';
 		$password_message = '';
 		
-		include 'login.php';
+		include './login.php';
 		break;
 	case 'login':
 		$email = filter_input(INPUT_POST, 'email');
@@ -125,7 +124,7 @@ switch ($action) {
 		
 		// If validation errors, redisplay Login page and exit controller
         if ($fields->hasErrors()) {
-            include 'account/login.php';
+            include './login.php';
             break;
         }
         
@@ -134,7 +133,7 @@ switch ($action) {
             $_SESSION['user'] = get_customer_by_email($email);
         } else {
             $password_message = 'Login failed. Invalid email or password.';
-            include 'account/login.php';
+            include './login.php';
             break;
         }
 
@@ -147,7 +146,7 @@ switch ($action) {
             redirect('.');
         }        
         break;
-}	case 'view_account':
+	case 'view_account':
 		$first_name = $_SESSION['user']['first_name'];
 		$last_name = $_SESSION['user']['last_name'];
 		$street_address = $_SESSION['user']['address'];
@@ -155,7 +154,7 @@ switch ($action) {
 		$zip = $_SESSION['user']['zip'];
         $email = $_SESSION['user']['email'];
 		
-        include 'account_view.php';
+        include './account_view.php';
         break;
 	case 'view_order':
 		$first_name = $_SESSION['user']['first_name'];
@@ -169,7 +168,7 @@ switch ($action) {
         $order_date = date('M j, Y', $order_date);
         $order_items = get_order_items($order_id);
         
-        include 'account_view_order.php';
+        include './account_view_order.php';
         break;
     case 'update_account':
         // Get the customer data
@@ -206,7 +205,7 @@ switch ($action) {
 
         // If validation errors, redisplay Login page and exit controller
         if ($fields->hasErrors()) {
-            include 'account/account_edit.php';
+            include './account_edit.php';
             break;
         }
         
@@ -214,7 +213,7 @@ switch ($action) {
         if (!empty($password_1) && !empty($password_2)) {            
             if ($password_1 !== $password_2) {
                 $password_message = 'Passwords do not match.';
-                include 'account/account_edit.php';
+                include './account_edit.php';
                 break;
             }
         }
@@ -240,7 +239,7 @@ switch ($action) {
         $order_date = date('M j, Y', $order_date);
         $status = $order['status'];
         
-        include 'account_view_order.php';
+        include './account_view_order.php';
         break;
 		
 		break;

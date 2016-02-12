@@ -1,8 +1,8 @@
 <?php
 // Set up the database connection
-$dsn = 'mysql:host=localhost;dbname=WSC';
-$username = 'mgs_user';
-$password = 'pa55word';
+$dsn = 'mysql:host=localhost;dbname=dcrawley_WSC';
+$username = 'dcrawley_WSC';
+$password = 'godsarmy';
 $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 
 try {
