@@ -47,8 +47,5 @@
             </td>
         </tr>
 </table>
-    <p>
-        Proceed to: <a href="<?php echo '?action=payment'; ?>">Payment</a>
-    </p>
 </main>
 <?php include '../view/footer.php'; ?>

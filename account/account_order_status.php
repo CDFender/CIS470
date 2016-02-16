@@ -1,63 +1,32 @@
 <?php include '../view/header.php'; ?>
 <main>
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-3">
 			<p>Hi, <?php echo htmlspecialchars($first_name);?></p>
 			<ul>
-				<li><a href="<?php echo $app_path . 'catalog?action=view_account'?>">Personal Details</a></li>
-				<li><a href="<?php echo $app_path . 'catalog?action=view_order'?>">Order History</a></li>
-				<li><a href="<?php echo $app_path . 'catalog?action=view_status'?>">Order Status</a></li>
+				<li><a href="<?php echo './?action=view_account'; ?>">Personal Details</a></li>
+				<li><a href="<?php echo './?action=view_order_history'; ?>">Order History</a></li>
 			</ul>
 		</div><!-- links -->
-		<div class="col-sm-8">
-			<h1>Order History</h1>
-			<?php if (count($orders) > 0) : ?>
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>Date</th>
-							<th>Order #</th>
-						</tr>
-					</thead>
-					<?php foreach($orders as $order) : 
-						$order_id = $order['order_id'];
-						$order_date = strtotime($order['order_date']);
-						$order_date = date('M j, Y', $order_date);
-						?>
-					
-					<tr>
-						<td><?php echo $order_date; ?>
-						<td>#<?php echo $order_id; ?>
-					</tr>
-				
-					<?php endforeach; ?>							
-				</table>
-			<?php else: ?>
-			<p>There are no orders to show.</p>
-			<?php endif; ?>
-			
-			<h2>Your Order</h2>
+		<div class="col-sm-9">
+			<h1>Order Status</h1>
 			<div class="row">
-				<div class="col-sm-6">
-					<p>Date: <?php echo htmlspecialchars($order['order_date']); ?></p>
-				</div><!-- order date -->
-				<div class="col-sm-6">
-					<p>Order #: <?php echo htmlspecialchars($order['order_id']); ?></p>
-				<div><!-- order number -->
-				<p>Order Status:</p>
-				
-				<?php
-					$status_with_tags = add_tags($status);
-				?>
-				<p><?php echo $status_with_tags; ?>
-				
-				<p>Shipping Address:</p>
-				<p><?php echo htmlspecialchars($order['shipping_address']); ?></p>
-				<p><?php echo htmlspecialchars($order['shipping_state']); ?></p>
-				<p><?php echo htmlspecialchars($order['shipping_zip']); ?></p>				
-				<a href=".?view_account"><button type="button" class="btn btn-lg btn-warning">
-						Return Order</button></a>
-			</div>			
+				<div class="col-sm-3">
+					<p>Date: <?php echo htmlspecialchars($order['Order_Date']); ?></p>
+					<p>Shipping Address:</p>
+					<p><?php echo htmlspecialchars($order['Shipping_Address']); ?></p>
+					<p><?php echo htmlspecialchars($order['Shipping_City']); ?>, 
+					<?php echo htmlspecialchars($order['Shipping_State']); ?>,
+					<?php echo htmlspecialchars($order['Shipping_ZIP']); ?></p>
+				</div><!-- order date and shipping info -->
+				<div class="col-sm-9">
+					<p>Order #: <?php echo htmlspecialchars($order['Order_ID']); ?></p>
+					<p>Status: <?php echo htmlspecialchars($order['Status']); ?></p>
+					<button type="button" class="btn btn btn-info">Order Status</button>
+					<button type="button" class="btn btn btn-danger">Cancel Order</button>
+					<button type="button" class="btn btn btn-warning">Return Order</button>
+				</div><!-- order item details -->
+			</div><!-- row end -->			
 		</div><!-- main section -->
 </main>
 <?php include '../view/header.php'; ?>

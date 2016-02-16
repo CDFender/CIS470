@@ -6,7 +6,6 @@ require_once('../model/cart.php');
 require_once('../model/product_db.php');
 require_once('../model/order_db.php');
 require_once('../model/customer_db.php');
-require_once('../model/address_db.php');
 
 if (!isset($_SESSION['user'])) {
     $_SESSION['checkout'] = true;
@@ -18,30 +17,63 @@ $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
     if ($action == NULL) {        
-        $action = 'confirm';
+        $action = 'address';
     }
 }
 
 switch ($action) {
-    case 'confirm':
-        $cart = cart_get_items();
+	case 'address':
+		$cart = cart_get_items();
+		if (cart_product_count() == 0) {
+			redirect('../cart');
+		}
+		
+		$first_name = $_SESSION['user']['First_Name'];
+		$last_name = $_SESSION['user']['Last_Name'];
+		$address = $_SESSION['user']['Address'];
+		$city = $_SESSION['user']['City'];
+		$state = $_SESSION['user']['State'];
+		$zip = $_SESSION['user']['ZIP'];
+		
+		$subtotal = cart_subtotal();
+	
+		include './checkout_address.php';
+		break;
+    case 'payment':
         if (cart_product_count() == 0) {
             redirect('../cart');
         }
-        $subtotal = cart_subtotal();
-        $item_count = cart_item_count();
-        $item_shipping = 5;
-        $shipping_cost = shipping_cost();
-        $shipping_address = get_address($_SESSION['user']['shipAddressID']);
-        $state = $shipping_address['state'];
-        $tax = tax_amount($subtotal);    // function from order_db.php file
-        $total = $subtotal + $tax + $shipping_cost;
-        include './checkout_confirm.php';
-        break;
-    case 'payment':
-        if (cart_product_count() == 0) {
-            redirect($app_path . 'cart');
-        }
+		
+		$billing_address = filter_input(INPUT_POST, 'address');
+		$billing_city = filter_input(INPUT_POST, 'city');
+		$billing_state = filter_input(INPUT_POST, 'state');
+		$billing_zip = filter_input(INPUT_POST, 'zip');
+		
+		$shipping_address = $billing_address;
+		$shipping_city = $billing_city;
+		$shipping_state = $billing_state;
+		$shipping_zip = $billing_zip;
+		
+		// Create and set values for Billing array in SESSION
+		if (!isset($_SESSION['billing'])) {
+			$_SESSION['billing'] = array();
+		}
+		
+		$_SESSION['billing']['billing_address'] = $billing_address;
+		$_SESSION['billing']['billing_city'] = $billing_city;
+		$_SESSION['billing']['billing_state'] = $billing_state;
+		$_SESSION['billing']['billing_zip'] = $billing_zip;
+		
+		// Create and set values for Shipping array in SESSION
+		if (!isset($_SESSION['shipping'])) {
+			$_SESSION['shipping'] = array();
+		}
+		
+		$_SESSION['shipping']['shipping_address'] = $shipping_address;
+		$_SESSION['shipping']['shipping_city'] = $shipping_city;
+		$_SESSION['shipping']['shipping_state'] = $shipping_state;
+		$_SESSION['shipping']['shipping_zip'] = $shipping_zip;
+		
         $card_number = '';
         $card_cvv = '';
         $card_expires = '';
@@ -49,24 +81,34 @@ switch ($action) {
         $cc_number_message = '';
         $cc_ccv_message = '';
         $cc_expiration_message = '';
-        
-        $billing_address = get_address($_SESSION['user']['billingAddressID']);
+		
+		$subtotal = cart_subtotal();
+		
+		$shipping_type = filter_input(INPUT_POST, 'shipping');
+		if ($shipping_type == 'free') {
+			$shipping = 0;
+		} else {
+			$shipping = 7.99;
+		}
+		
+		$_SESSION['shipping']['shipping_type'] = $shipping_type;
+		$_SESSION['shipping']['shipping'] = $shipping;
+       
         include './checkout_payment.php';
         break;
     case 'process':
         if (cart_product_count() == 0) {
-            redirect('Location: ' . $app_path . 'cart');
+            redirect('../cart');
         }
+		
         $cart = cart_get_items();
         $card_type = filter_input(INPUT_POST, 'card_type', FILTER_VALIDATE_INT);
         $card_number = filter_input(INPUT_POST, 'card_number');
         $card_cvv = filter_input(INPUT_POST, 'card_cvv');
         $card_expires = filter_input(INPUT_POST, 'card_expires');
 
-        $billing_address = get_address($_SESSION['user']['billingAddressID']);
 
         // Validate card data
-        // NOTE: This uses functions from the util/validation.php file
         if ($card_type === false) {
             display_error('Card type is required.');
         } elseif (!is_valid_card_type($card_type)) {
@@ -101,20 +143,67 @@ switch ($action) {
             include './checkout_payment.php';
             break;
         }
+		
+		$credit_card = '';
 
-        $order_id = add_order($card_type, $card_number,
-                              $card_cvv, $card_expires);
+		switch ($card_type) {
+			case '1': 
+				$credit_card = 'Mastercard';
+				break;
+			case '2':
+				$credit_card = 'Visa';
+				break;
+			case '3':
+				$credit_card = 'Discover';
+				break;
+			case '4':
+				$credit_card = 'American Express';
+				break;
+			default:
+				break;
+		}
+		
+		$billing_address = $_SESSION['billing']['billing_address'];
+		$billing_city = $_SESSION['billing']['billing_city'];
+		$billing_state = $_SESSION['billing']['billing_state'];
+		$billing_zip = $_SESSION['billing']['billing_zip'];
+		
+		$shipping_address = $_SESSION['shipping']['shipping_address'];
+		$shipping_city = $_SESSION['shipping']['shipping_city'];
+		$shipping_state = $_SESSION['shipping']['shipping_state'];
+		$shipping_zip = $_SESSION['shipping']['shipping_zip'];
+		$shipping_type = $_SESSION['shipping']['shipping_type'];
+		$shipping = $_SESSION['shipping']['shipping'];
+		
+		$customer_id = $_SESSION['user']['User_ID'];
+		
+		// Add Order Here
+		$billing_id = add_billing($credit_card, $card_number, $billing_address,
+				$billing_city, $billing_state, $billing_zip, $customer_id);
+							  
+		$order_id = add_order($customer_id, $billing_id, $shipping_type, $shipping, 
+				$shipping_address, $shipping_city, $shipping_state, $shipping_zip);
 
         foreach($cart as $product_id => $item) {
-            $item_price = $item['list_price'];
-            $discount = $item['discount_amount'];
+            $item_price = $item['price'];
             $quantity = $item['quantity'];
-            add_order_item($order_id, $product_id,
-                           $item_price, $discount, $quantity);
+			$inscription = '';
+            add_production_item($order_id, $product_id,
+                           $item_price, $quantity, $inscription);
         }
+		
+		$_SESSION['user']['order_id'] = $order_id;
+		
         clear_cart();
-        redirect('../account?action=view_order&order_id=' . $order_id);
+        redirect('./?action=confirm');
         break;
+    case 'confirm':
+        $order_id = $_SESSION['user']['order_id'];
+        include '../account/?action=view_order&order_id=' . $order_id;
+        break;
+	case 'cancel':
+		redirect('../cart');
+		break;
     default:
         display_error('Unknown cart action: ' . $action);
         break;

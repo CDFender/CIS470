@@ -57,9 +57,6 @@ function is_valid_card_expires($card_expires) {
     $now = new DateTime();
     $expires = new DateTime();
     $expires->setDate($date_parts[1], $date_parts[0], 1);
-    $expires->add(new DateInterval("P1M"));
-    $expires->sub(new DateInterval("P1D"));
-    $expires->setTime(23,59,59);
 
     return ($now < $expires);
 }

@@ -7,7 +7,7 @@
 		<p class="lead">We are your #1 print and engraving job specialists for all your home, business, 
 				and enthusiast needs. Sign up to our website today to order your personalized print or 
 				engraving product, with rush shipping available.</p>
-		<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today!</a></p>
+		<p><a class="btn btn-lg btn-success" href="<?php echo $app_path . 'account?action=view_register'; ?>" role="button">Sign up today!</a></p>
 		</div><!-- jumbotron -->
 		
 		<h1>Featured Products</h1>

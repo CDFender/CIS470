@@ -24,8 +24,8 @@
 								aria-haspopup="true" area-expanded="false">Help<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="<?php echo $app_path . 'help?action=contact';?>">Contact Us</a></li>
-							<li><a href="<?php echo $app_path . 'account?action=view_order';?>">Order Status</a></li>
-							<li><a href="<?php echo $app_path . 'account?action=view_order';?>">Returns</a></li>
+							<li><a href="<?php echo $app_path . 'account?action=view_order_history';?>">Order Status</a></li>
+							<li><a href="<?php echo $app_path . 'account?action=view_order_history';?>">Returns</a></li>
 						</ul>
 					</li>
 					<?php
@@ -41,7 +41,7 @@
 								<?php echo htmlspecialchars($_SESSION['user']['First_Name']);?>!<span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="<?php echo $account_url;?>">My Account</a></li>
-							<li><a href="<?php echo $app_path . 'account?action=view_account';?>">My Orders</a></li>
+							<li><a href="<?php echo $app_path . 'account?action=view_order_history';?>">My Orders</a></li>
 							<li><a href="<?php echo $logout_url;?>">Logout</a></li>
 						</ul>
 					</li>
