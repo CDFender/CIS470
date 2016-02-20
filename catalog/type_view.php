@@ -6,6 +6,7 @@
 		<p>There are no products of this type.</p>
 	<?php else: ?>
 		<div class="row">
+			<ul>
 			<?php foreach ($products as $product) :
 			$price = $product['Price'];
 			$description = $product['Description'];
@@ -16,15 +17,16 @@
 			$first_paragraph = substr($description_with_tags, 3, $i - 3);
 			?>		
 		
-			<article class="product col-sm-3">
+			<li class="product col-sm-6 col-md-3">
 				<img class="product_image_column" src="../images/<?php echo htmlspecialchars($product['Product_ID']);?>.jpg" 
 						alt="Thumbnail">
-				<h3><a href="./?product_id=<?php echo $product['Product_ID'];?>">
+				<h3 class="catalog_product"><a href="./?product_id=<?php echo $product['Product_ID'];?>">
 						<?php echo htmlspecialchars($product['Name']);?></a></h3>
-				<p><b>Price: </b>$<?php echo number_format($price, 2);?></p>
 				<p><?php echo $first_paragraph;?></p>
-			</article>
+				<p><b>Price: </b>$<?php echo number_format($price, 2);?></p>								
+			</li>
 			<?php endforeach; ?>			
+			</ul>
 		</div><!-- row -->		
 	<?php endif; ?>
 </main>

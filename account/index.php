@@ -4,6 +4,7 @@ require_once('../util/main.php');
 require_once('../model/customer_db.php');
 require_once('../model/order_db.php');
 require_once('../model/product_db.php');
+require_once('../model/cart.php');
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
@@ -15,6 +16,8 @@ if ($action == NULL) {
 		}
 	}
 }
+
+$cart_items = cart_item_count();
 
 switch ($action) {
 	case 'view_register':
@@ -94,6 +97,9 @@ switch ($action) {
         if (isset($_SESSION['checkout'])) {
             unset($_SESSION['checkout']);
             redirect('../checkout');
+		} elseif (isset($_SESSION['view_orders'])) {
+			unset($_SESSION['view_orders']);
+			redirect('./?action=view_order_history');
         } else {
             redirect('.');
         }        
@@ -107,9 +113,16 @@ switch ($action) {
 		$zip = $_SESSION['user']['ZIP'];
         $email = $_SESSION['user']['Email'];
 		
+		$password_message = '';
+		
         include './account_view.php';
         break;
 	case 'view_order_history':
+		if (!isset($_SESSION['user'])) {
+			$_SESSION['view_orders'] = true;
+			redirect('.');
+			break;
+		}
 		$first_name = $_SESSION['user']['First_Name'];
 		$user_id = $_SESSION['user']['User_ID'];		
 		$orders = get_orders_by_customer_id($user_id);
@@ -143,7 +156,7 @@ switch ($action) {
         $city = filter_input(INPUT_POST, 'city');
         $state = filter_input(INPUT_POST, 'state');
         $zip = filter_input(INPUT_POST, 'zip');
-		$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+		$email = filter_input(INPUT_POST, 'email');
 		$password_1 = filter_input(INPUT_POST, 'password_1');
         $password_2 = filter_input(INPUT_POST, 'password_2');
         $password_message = '';
@@ -152,7 +165,7 @@ switch ($action) {
         $old_customer = get_customer($customer_id);
 
         // Check email change and display message if necessary
-        if ($email != $old_customer['emailAddress']) {
+        if ($email != $old_customer['Email']) {
             display_error('You can\'t change the email address for an account.');
         }
 
@@ -160,19 +173,19 @@ switch ($action) {
         if (!empty($password_1) && !empty($password_2)) {            
             if ($password_1 !== $password_2) {
                 $password_message = 'Passwords do not match.';
-                include '.';
+                include './account_view.php';
                 break;
             }
         }
 
         // Update the customer data
-        update_customer($customer_id, $first_name, $last_name,
-            $password_1, $password_2, $address, $city, $state, $zip);
+        update_customer($customer_id, $first_name, $last_name, $password_1, $password_2, 
+				$address, $city, $state, $zip);
 
         // Set the new customer data in the session
         $_SESSION['user'] = get_customer($customer_id);
 
-        redirect('.');
+        redirect('./?action=view_account');
         break;
 	case 'view_status':
 		$first_name = $_SESSION['user']['First_Name'];

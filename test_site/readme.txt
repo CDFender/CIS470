@@ -1,0 +1,1 @@
+Directory for draft of website using HTML instead of PHP. That way we don't need a server to host the PHP files in order to check how the site will look.

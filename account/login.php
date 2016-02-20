@@ -9,23 +9,25 @@
 			
 			<label for="inputEmail" class="sr-only">Email address</label>
 			<input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email address" 
-						value="<?php echo htmlspecialchars($email); ?>" autofocus><br>
+						value="<?php echo htmlspecialchars($email); ?>" autofocus>
 			
 			<label for="inputPassword" class="sr-only">Password</label>
 			<input name="password" type="password" id="inputPassword" class="form-control" 
-						placeholder="Password"></br>
+						placeholder="Password">
 			
 			<div class="checkbox">
 				<label>
 					<input type="checkbox" value="remember-me"> Remember me
 				</label>
-			</div><!-- checkbox -->
+			</div><!-- checkbox --><br>
 			
-			<input type="submit" value="Sign in" class="btn btn-lg btn-primary btn-block">
 			<?php if (!empty($password_message)) : ?>
-			<span class="error"><?php echo htmlspecialchars($password_message); ?></span><br>
-			<?php endif; ?>			
+			<div class="alert alert-danger" role="alert">
+				<span class="error"><?php echo htmlspecialchars($password_message); ?></span>
+			</div>
+			<?php endif; ?>
 			
+			<input type="submit" value="Sign in" class="btn btn-lg btn-primary btn-block">			
 			<a href="./?action=view_register" class="btn btn-lg btn-info btn-block">Register for a new account</a>
 			<div class="">
 				<label><a href="">Forgot password?</a></label>

@@ -7,6 +7,8 @@ require_once('../model/product_db.php');
 require_once('../model/order_db.php');
 require_once('../model/customer_db.php');
 
+$cart_items = cart_item_count();
+
 if (!isset($_SESSION['user'])) {
     $_SESSION['checkout'] = true;
     redirect('../account');
@@ -187,7 +189,10 @@ switch ($action) {
         foreach($cart as $product_id => $item) {
             $item_price = $item['price'];
             $quantity = $item['quantity'];
-			$inscription = '';
+			$inscription = $item['inscription'];
+			if (empty($inscription)) {
+				$inscription = 'Cool story, bro!';
+			}
             add_production_item($order_id, $product_id,
                            $item_price, $quantity, $inscription);
         }
@@ -199,7 +204,7 @@ switch ($action) {
         break;
     case 'confirm':
         $order_id = $_SESSION['user']['order_id'];
-        include '../account/?action=view_order&order_id=' . $order_id;
+		redirect('../account?action=view_order&order_id=' . $order_id);
         break;
 	case 'cancel':
 		redirect('../cart');

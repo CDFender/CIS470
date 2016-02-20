@@ -5,31 +5,68 @@
 		<div class="row">
 			<h1>Billing & Shipping Address</h1>
 			<div class="col-sm-8">
-				<form action="." method="post">
+				<form action="." method="post" class="form-horizontal">
 					<input type="hidden" name="action" value="payment">
-					<p><label>First Name</label>
-						<input type="text" name="first_name" maxlength="50" 
-								value="<?php echo htmlspecialchars($first_name); ?>"/></p>
-					<p><label>Last Name</label>
-						<input type="text" name="last_name" maxlength="50" 
-								value="<?php echo htmlspecialchars($last_name); ?>"/></p>
-					<p><label>Street Address</label>
-						<input type="text" name="address" maxlength="100" 
-								value="<?php echo htmlspecialchars($address); ?>"/></p>
-					<p><label>City</label>
-						<input type="text" name="city" maxlength="40" 
-								value="<?php echo htmlspecialchars($city); ?>"/></p>
-					<p><label>State</label>
-						<input type="text" name="state" maxlength="20" 
-								value="<?php echo htmlspecialchars($state); ?>"/></p>
-					<p><label>Zip</label>
-						<input type="text" name="zip" maxlength="5" 
-								value="<?php echo htmlspecialchars($zip); ?>"/></p>
-					<p>Shipping Method</p>
-					<input type="radio" name="shipping" value="free" checked="checked" /> Standard (Free)<br>
-					<input type="radio" name="shipping" value="express" /> Express ($7.99)<br>
 					
-					<input type="submit" value="Continue" class="btn btn-large btn-success"><br>
+					<div class="form-group">
+						<label for="first_name" class="col-sm-2 control-label">First Name</label>						
+						<div class="col-sm-5">
+							<input class="form-control" type="text" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>">						
+						</div>
+					</div><!-- form group end -->
+					
+					<div class="form-group">						
+						<label for="last_name" class="col-sm-2 control-label">Last Name</label>						
+						<div class="col-sm-5">
+							<input class="form-control" type="text" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>">						
+						</div>
+					</div><!-- form group end -->
+					
+					<div class="form-group">
+						<label for="address" class="col-sm-2 control-label">Street Address</label>
+						<div class="col-sm-5">
+							<input class="form-control" type="text" name="address" value="<?php echo htmlspecialchars($address); ?>">						
+						</div>
+					</div><!-- form group end -->
+					
+					<div class="form-group">
+						<label for="city" class="col-sm-2 control-label">City</label>
+						<div class="col-sm-5">
+							<input class="form-control" type="text" name="city" value="<?php echo htmlspecialchars($city); ?>">						
+						</div>
+					</div><!-- form group end -->
+					
+					<div class="form-group">
+						<label for="state" class="col-sm-2 control-label">State</label>						
+						<div class="col-sm-5">
+							<input class="form-control" type="text" name="state" value="<?php echo htmlspecialchars($state); ?>">
+						</div>
+					</div><!-- form group end -->
+					
+					<div class="form-group">
+						<label for="zip" class="col-sm-2 control-label">Zip</label>
+						<div class="col-sm-5">
+							<input class="form-control" type="text" name="zip" value="<?php echo htmlspecialchars($zip); ?>">
+						</div>
+					</div><!-- form group end -->
+					
+					<div class="form-group">
+						<label class="col-sm-offset-2 control-label">Shipping Method</label>
+						<div class="radio">
+							<label class="col-sm-offset-2">
+							<input type="radio" name="shipping" value="free" checked="checked">
+							Standard (Free)</label>
+						</div>
+						<div class="radio">
+							<label class="col-sm-offset-2">
+							<input type="radio" name="shipping" value="express">
+							Express ($7.99)</label>
+						</div>
+					</div><!-- form group end -->
+					
+					<div class="form-group">
+						<input type="submit" value="Continue" class="col-sm-offset-2 btn btn-large btn-success">
+					</div><!-- form group end -->
 				</form>
 			</div><!-- shipping info -->
 			<div class="col-sm-4">

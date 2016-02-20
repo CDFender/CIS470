@@ -2,8 +2,9 @@
 <main>
 	<div class="row">
 		<div class="col-sm-3">
-			<p>Hi, <?php echo htmlspecialchars($first_name);?></p>
-			<ul>
+			<br>
+			<h5><strong>Welcome back, <?php echo htmlspecialchars($first_name);?>!</strong></h5>
+			<ul class="account_links">
 				<li><a href="<?php echo './?action=view_account'; ?>">Personal Details</a></li>
 				<li><a href="<?php echo './?action=view_order_history'; ?>">Order History</a></li>
 			</ul>

@@ -39,7 +39,7 @@ function get_customer($customer_id) {
 
 function get_customer_by_email($email) {
     global $db;
-    $query = 'SELECT * FROM User WHERE Email = :email';
+    $query = 'SELECT * FROM `User` WHERE `Email` = :email';
     $statement = $db->prepare($query);
     $statement->bindValue(':email', $email);
     $statement->execute();
@@ -72,33 +72,23 @@ function add_customer($first_name, $last_name, $email, $password_1, $address, $c
     return $customer_id;
 }
 
-function update_customer($customer_id, $first_name, $last_name,
-                      $password_1, $password_2, $address, $city, $state, $zip) {
+function update_customer($customer_id, $first_name, $last_name, $password_1, $password_2,
+			$address, $city, $state, $zip) {
     global $db;
-    $query = '
-			UPDATE `User` 
-			SET `First_Name`= :first_name,
-				`Last_Name`= :last_name,
-				`Address`= :address,
-				`City`= :city,
-				`State`= :state,
-				`ZIP`= :zip 
-			WHERE `User_ID` = :customer_id';
-		
-	//	UPDATE `User`
-		//SET `First_Name` = :first_name,
-			//`Last_Name` = :last_name, 
-			//`Email` = :email,
-			//`Address` = :address,
-			//`City` = :city,
-			//`State` = :state,
-			//`ZIP` = :zip
-		//WHERE `User_ID` = :customer_id';
+	$query = '
+		UPDATE `User` 
+		SET `First_Name`= :first_name,
+			`Last_Name`= :last_name,
+			`Address`= :address,
+			`City`= :city,
+			`State`= :state,
+			`ZIP`= :zip 
+		WHERE `User_ID`= :customer_id';
     $statement = $db->prepare($query);
-    $statement->bindValue(':first_name', $first_name);
-    $statement->bindValue(':last_name', $last_name);
-	$statement->bindValue(':address', $address);
-	$statement->bindValue(':city', $city);
+	$statement->bindValue(':first_name', $first_name);
+	$statement->bindValue(':last_name', $last_name);
+    $statement->bindValue(':address', $address);
+    $statement->bindValue(':city', $city);
 	$statement->bindValue(':state', $state);
 	$statement->bindValue(':zip', $zip);
     $statement->bindValue(':customer_id', $customer_id);
@@ -106,12 +96,13 @@ function update_customer($customer_id, $first_name, $last_name,
     $statement->closeCursor();
 
     if (!empty($password_1) && !empty($password_2)) {
+        $password = $password_1;
         $query = '
-            UPDATE `User`
-            SET `Password` = :password
-            WHERE `User_ID` = :customer_id';
+			UPDATE `User` 
+			SET `Password`= :password
+			WHERE `User_ID`= :customer_id';
         $statement = $db->prepare($query);
-        $statement->bindValue(':password', $password_1);
+        $statement->bindValue(':password', $password);
         $statement->bindValue(':customer_id', $customer_id);
         $statement->execute();
         $statement->closeCursor();

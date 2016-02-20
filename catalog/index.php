@@ -1,6 +1,7 @@
 <?php
 require_once('../util/main.php');
 require_once('../model/product_db.php');
+require_once('../model/cart.php');
 
 $type = filter_input(INPUT_GET, 'type');
 $product_id = filter_input(INPUT_GET, 'product_id');
@@ -12,6 +13,8 @@ if ($type !== null) {
 } else {
 	$action = '';
 }
+
+$cart_items = cart_item_count();
 
 switch ($action) {
 	// Display the specified media type
