@@ -4,8 +4,9 @@
 	<div class="page" id="featured">		
 		<div class="row">
 			<div class="col-sm-offset-2 col-sm-8">
-				<h4>If you have any questions regarding your order, account, or our policies; please contact
-					us using the information listed below.</h4>
+				<h1>Contact Us</h1>
+				<p>If you have any questions regarding your order, account, or our policies; please contact
+					us using the information listed below.</p>
 				<blockquote>
 					<ul>
 						<li>Email: wscinfo@wsc.com</li>
